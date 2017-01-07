@@ -22,30 +22,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-      $(function(){
-        var socket = io.connect();
-      
-        // 接続時の動作
-        socket.on('user connected', function (data) {
-            $('span').html(data);
-        });
-      
-        // 切断時の動作
-        socket.on('user disconnected', function (data) {
-            $('span').html(data);
-        });
-
-        $("#reload").click(function(){
-          location.reload();
-        });
-
-        $("#exit").click(function(){
-          open(location, '_self').close();
-          window.close();
-          window.top.close();
-        });
-      });
-      </script>
+    <script src="index.js"/>
   </body>
 </html>
