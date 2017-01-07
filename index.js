@@ -2,10 +2,12 @@ var http = require("http");
 var socketio =  require("socket.io");
 var fs = require("fs");
 var ejs = require('ejs');
+var exec = require('child_process').exec;
+
 
 /* app settings */
 var PORT = 8127;
-var TIMEOUT = 5000;
+var TIMEOUT = 50 * 1000;
 var CAMERA_PORT = 8128;
 
 var server = http.createServer(function(req, res) {
@@ -23,30 +25,40 @@ var to;
 
 var isStreaming = false;
 
-var startCamera = function(){
+var startStreaming = function(){
     if(isStreaming){
         return;
     }
     isStreaming = true;
 
     // start streaming
+    exec('./scripts/start_streaming.sh', (err, stdout, stderr) => {
+	if (err) { console.log(err); }
+	console.log(stdout);
+    });
 }
 
-var stopCamera = function(){
+var stopStreaming = function(){
     isStreaming = false;
 
     //stop streaming
+    exec('/bin/bash ./scripts/stop_streaming.sh', (err, stdout, stderr) => {
+	console.log("stop streaming");
+	if (err) { console.log(err); }
+	console.log(stdout);
+
+    });
 }
 
 io.sockets.on("connection", function (socket) {
     connection ++;
-    startCamera();
+    startStreaming();
     console.log("connected: " + connection);
 
     clearTimeout(to);
     to = setTimeout(function () {
         console.log("timeout");
-        stopCamera();
+        stopStreaming();
     }, TIMEOUT);
 
     io.sockets.emit('user connected', connection);
@@ -54,7 +66,7 @@ io.sockets.on("connection", function (socket) {
     socket.on('disconnect', function () {
         connection--;
         if(connection == 0){
-            stopCamera();
+            stopStreaming();
         }
         io.sockets.emit('user disconnected', connection);
     });
