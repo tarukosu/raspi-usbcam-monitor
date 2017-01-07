@@ -34,6 +34,16 @@
         socket.on('user disconnected', function (data) {
             $('span').html(data);
         });
+
+        $("#reload").click(function(){
+          location.reload();
+        });
+
+        $("#exit").click(function(){
+          open(location, '_self').close();
+          window.close();
+          window.top.close();
+        });
       });
       </script>
   </body>
