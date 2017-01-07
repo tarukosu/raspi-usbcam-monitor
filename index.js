@@ -1,6 +1,7 @@
 var http = require("http");
 var socketio = require("socket.io");
 var fs = require("fs");
+var ejs = require('ejs');
 
 /* app settings */
 var PORT = 4000;
