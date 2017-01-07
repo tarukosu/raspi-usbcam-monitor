@@ -1,16 +1,19 @@
 var http = require("http");
-var socketio = require("socket.io");
+var socketio =  require("socket.io");
 var fs = require("fs");
 var ejs = require('ejs');
 
 /* app settings */
-var PORT = 4000;
+var PORT = 8127;
 var TIMEOUT = 5000;
+var CAMERA_PORT = 8128;
 
 var server = http.createServer(function(req, res) {
-     res.writeHead(200, {"Content-Type":"text/html"});
-     var output = fs.readFileSync("./index.html", "utf-8"); 
-     res.end(output);
+    res.writeHead(200, {"Content-Type":"text/html"});
+    //var output = fs.readFileSync("./index.html", "utf-8"); 
+    var ejsPage = fs.readFileSync("./index.ejs", "utf-8"); 
+    var output = ejs.render(ejsPage, {title: "hoge"});
+    res.end(output);
 }).listen(process.env.APP_PORT || PORT);
 
 var io = socketio.listen(server);
