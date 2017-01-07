@@ -10,10 +10,10 @@
   </head>
   <body>
     <div class="container">
-      <%=title %>
       <div><span></span>人がページを開いています</div>
       <button type="button" class="btn btn-primary btn-lg btn-block" id="reload" value="リロード">リロード</button>
       <img src="http://leafeon.local:8080/?action=stream"/>
+      <img src="<%=stream_url %>"/>
       <button type="button" class="btn btn-danger btn-lg btn-block" id="exit" value="終了">終了</button>
     </div>
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
