@@ -26,8 +26,9 @@ var to;
 var startStreaming = function(){
     console.log("start streaming");
     exec('./scripts/start_streaming.sh -p ' + CAMERA_PORT, (err, stdout, stderr) => {
-	    if (err) { console.log(err); }
-	    console.log(stdout);
+	if (err) { console.log(err); }
+	console.log(stdout);
+	console.log(stderr);
     });
 }
 
