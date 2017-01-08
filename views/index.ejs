@@ -12,9 +12,8 @@
     <div class="container">
       <div><span></span>人がページを開いています</div>
       <button type="button" class="btn btn-primary btn-lg btn-block" id="reload" value="リロード">リロード</button>
-      <img src="http://leafeon.local:8080/?action=stream"/>
-      <img src="<%=stream_url %>"/>
-      <button type="button" class="btn btn-danger btn-lg btn-block" id="exit" value="終了">終了</button>
+      <img id="stream-video" src="<%=stream_url %>"/>
+      <button type="button" class="btn btn-danger btn-lg btn-block" id="stop" value="終了">終了</button>
     </div>
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
@@ -22,6 +21,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="index.js"/>
+    <script src="js/index.js"></script>
   </body>
 </html>

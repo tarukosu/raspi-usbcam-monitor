@@ -1,45 +1,41 @@
-var http = require("http");
-var socketio =  require("socket.io");
 var fs = require("fs");
 var ejs = require('ejs');
 var exec = require('child_process').exec;
-
+var express = require('express');
+var app = express();
+var http = require("http").Server(app);
+var io =  require("socket.io")(http);
 
 /* app settings */
 var PORT = 8127;
 var TIMEOUT = 50 * 1000;
 var CAMERA_PORT = 8128;
-var PAGE_HOST = "leafeon.local";
 
-var server = http.createServer(function(req, res) {
-    res.writeHead(200, {"Content-Type":"text/html"});
-    //var output = fs.readFileSync("./index.html", "utf-8"); 
-    var ejsPage = fs.readFileSync("./index.ejs", "utf-8"); 
-    var output = ejs.render(ejsPage, {stream_url: "http://" + PAGE_HOST + ":" + CAMERA_PORT + "/?action=stream"});
-    res.end(output);
-}).listen(process.env.APP_PORT || PORT);
+app.engine('ejs',ejs.renderFile);
+app.use(express.static(__dirname + '/public'));
 
-var io = socketio.listen(server);
+app.get("/", function(req, res){
+    res.render("index.ejs", {stream_url: "http://hostname:" + CAMERA_PORT + "/?action=stream"});
+});
+
+http.listen(process.env.APP_PORT || PORT);
 
 var connection = 0;
 var to;
 
-var isStreaming = false;
-
 var startStreaming = function(){
     console.log("start streaming");
     exec('./scripts/start_streaming.sh -p ' + CAMERA_PORT, (err, stdout, stderr) => {
-	if (err) { console.log(err); }
-	console.log(stdout);
+	    if (err) { console.log(err); }
+	    console.log(stdout);
     });
 }
 
 var stopStreaming = function(){
-    isStreaming = false;
+    console.log("stop streaming");
     exec('./scripts/stop_streaming.sh', (err, stdout, stderr) => {
-	console.log("stop streaming");
-	if (err) { console.log(err); }
-	console.log(stdout);
+	    if (err) { console.log(err); }
+	    console.log(stdout);
     });
 }
 
@@ -62,5 +58,9 @@ io.sockets.on("connection", function (socket) {
             stopStreaming();
         }
         io.sockets.emit('user disconnected', connection);
+    });
+
+    socket.on('stop streaming', function(){
+        stopStreaming();
     });
 });

@@ -1,4 +1,8 @@
 $(function(){
+    var path = $('#stream-video').attr("src");
+    var newPath = path.replace(/hostname/, location.hostname);
+    $('#stream-video').attr("src", newPath);
+
     var socket = io.connect();
 
     // 接続時の動作
@@ -15,9 +19,7 @@ $(function(){
         location.reload();
     });
 
-    $("#exit").click(function(){
-        open(location, '_self').close();
-        window.close();
-        window.top.close();
+    $("#stop").click(function(){
+        socket.emit("stop streaming");
     });
 });
