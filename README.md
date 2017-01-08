@@ -14,3 +14,6 @@ $ cd /path/to/raspi-usbcam-monitor
 $ npm install
 $ node index.js
 ```
+
+# Blog post
+http://tarukosu.hatenablog.com/entry/2017/01/08/200449
