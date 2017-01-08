@@ -8,7 +8,7 @@ var io =  require("socket.io")(http);
 
 /* app settings */
 var PORT = 8127;
-var TIMEOUT = 50 * 1000;
+var TIMEOUT = 10 * 60 * 1000;
 var CAMERA_PORT = 8128;
 
 app.engine('ejs',ejs.renderFile);
@@ -26,17 +26,18 @@ var to;
 var startStreaming = function(){
     console.log("start streaming");
     exec('./scripts/start_streaming.sh -p ' + CAMERA_PORT, (err, stdout, stderr) => {
-	if (err) { console.log(err); }
-	console.log(stdout);
-	console.log(stderr);
+        if (err) { console.log(err); }
+        console.log(stdout);
+        console.log(stderr);
     });
 }
 
 var stopStreaming = function(){
     console.log("stop streaming");
     exec('./scripts/stop_streaming.sh', (err, stdout, stderr) => {
-	    if (err) { console.log(err); }
-	    console.log(stdout);
+        if (err) { console.log(err); }
+        console.log(stdout);
+        console.log(stderr);
     });
 }
 
