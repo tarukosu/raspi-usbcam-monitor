@@ -5,6 +5,7 @@ var express = require('express');
 var app = express();
 var http = require("http").Server(app);
 var io =  require("socket.io")(http);
+var favicon = require('serve-favicon');
 
 /* app settings */
 var PORT = 8127;
@@ -12,7 +13,9 @@ var TIMEOUT = 10 * 60 * 1000;
 var CAMERA_PORT = 8128;
 
 app.engine('ejs',ejs.renderFile);
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(express.static(__dirname + '/public'));
+
 
 app.get("/", function(req, res){
     res.render("index.ejs", {stream_url: "http://hostname:" + CAMERA_PORT + "/?action=stream"});
@@ -65,10 +68,6 @@ io.sockets.on("connection", function (socket) {
             }, 10 * 1000);
         }
         io.sockets.emit('user disconnected', connection);
-    });
-
-    socket.on('start streaming', function(){
-        startStreaming();
     });
 
     socket.on('stop streaming', function(){
