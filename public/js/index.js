@@ -17,6 +17,7 @@ $(function(){
 
     $("#reload").click(function(){
         location.reload();
+        //socket.emit("start streaming");
     });
 
     $("#stop").click(function(){

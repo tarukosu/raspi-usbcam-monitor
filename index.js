@@ -57,9 +57,18 @@ io.sockets.on("connection", function (socket) {
     socket.on('disconnect', function () {
         connection--;
         if(connection == 0){
-            stopStreaming();
+            //stopStreaming();
+            clearTimeout(to);
+            to = setTimeout(function () {
+                console.log("timeout");
+                stopStreaming();
+            }, 10 * 1000);
         }
         io.sockets.emit('user disconnected', connection);
+    });
+
+    socket.on('start streaming', function(){
+        startStreaming();
     });
 
     socket.on('stop streaming', function(){
