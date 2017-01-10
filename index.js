@@ -28,6 +28,7 @@ var to;
 
 var startStreaming = function(){
     console.log("start streaming");
+    io.sockets.emit('streaming status', true);
     exec('./scripts/start_streaming.sh -p ' + CAMERA_PORT, (err, stdout, stderr) => {
         if (err) { console.log(err); }
         console.log(stdout);
@@ -37,6 +38,7 @@ var startStreaming = function(){
 
 var stopStreaming = function(){
     console.log("stop streaming");
+    io.sockets.emit('streaming status', false);
     exec('./scripts/stop_streaming.sh', (err, stdout, stderr) => {
         if (err) { console.log(err); }
         console.log(stdout);

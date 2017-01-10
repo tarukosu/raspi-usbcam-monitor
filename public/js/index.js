@@ -7,12 +7,20 @@ $(function(){
 
     // 接続時の動作
     socket.on('user connected', function (data) {
-        $('span').html(data);
+        $('#connection').text(data);
     });
 
     // 切断時の動作
     socket.on('user disconnected', function (data) {
-        $('span').html(data);
+        $('#connection').html(data);
+    });
+
+    socket.on('streaming status', function (data) {
+        if(data){
+            $('#streaming').html("動作中");
+        }else{
+            $('#streaming').html("停止中");
+        }
     });
 
     $("#reload").click(function(){
